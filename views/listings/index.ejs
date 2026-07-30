@@ -1,0 +1,211 @@
+<% layout("layouts/boilerplate.ejs")-%>
+    <style>
+        #filters {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            margin-right: 2rem;
+            text-align: center;
+            opacity: 0.7;
+        }
+
+        .filter:hover {
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        /* Container Box */
+        .tax-toggle {
+            border: 1px solid #e0e0e0;
+            border-radius: 0.75rem;
+            padding: 0.6rem 1rem;
+            display: inline-block;
+            background-color: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Label Styling */
+        .tax-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #222222;
+            cursor: pointer;
+            white-space: nowrap;
+            /* Prevents text from breaking onto multiple lines */
+        }
+
+        /* Switch Button Styling */
+        .tax-switch {
+            float: none !important;
+            /* Disables Bootstrap's default float alignment */
+            cursor: pointer;
+            width: 2.5em !important;
+            /* Sets fixed width for toggle */
+            height: 1.25em !important;
+            /* Sets fixed height for toggle */
+        }
+
+        .tax-switch:checked {
+            background-color: #fe424d;
+            border-color: #fe424d;
+        }
+
+        .tax-info {
+            display: none;
+            font-size: 0.85rem;
+            color: #717171;
+            /* Subtle Airbnb grey */
+        }
+
+        /* Tablet & Desktop Scaling */
+        @media (min-width: 768px) {
+            .tax-label {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Base style for category links */
+        .category-link {
+            opacity: 0.6;
+            transition: opacity 0.2s ease-in-out;
+            border-bottom: 2px solid transparent;
+            /* Prevents layout jump when border appears */
+            padding-bottom: 5px;
+        }
+
+        .category-link:hover {
+            opacity: 1;
+            border-bottom: 2px solid #ddd;
+        }
+
+        /* Style for the active category */
+        .category-link.active-filter {
+            opacity: 1 !important;
+            font-weight: bold;
+            border-bottom: 2px solid #fe424d;
+            /* Brand red underline */
+        }
+    </style>
+
+    <body>
+        <div id="filters">
+            <div class="d-none d-md-flex align-items-center gap-4">
+                <!-- Wrap each individual filter container inside an anchor tag link -->
+                <a href="/Listings?category=Trending"
+                    class="text-decoration-none text-dark filter category-link <%= activeCategory === 'Trending' ? 'active-filter' : '' %>">
+                    <i class="fa-solid fa-fire"></i>
+                    <p class="mb-0">Trending</p>
+                </a>
+                <a href="/Listings?category=Mountains"
+                    class="text-decoration-none text-dark filter category-link <%= activeCategory === 'Mountains' ? 'active-filter' : '' %>">
+                    <i class="fa-solid fa-mountain"></i>
+                    <p class="mb-0">Mountains</p>
+                </a>
+                <a href="/Listings?category=Castles"
+                    class="text-decoration-none text-dark filter category-link <%= activeCategory === 'Castles' ? 'active-filter' : '' %>">
+                    <i class="fa-brands fa-fort-awesome"></i>
+                    <p class="mb-0">Castles</p>
+                </a>
+                <a href="/Listings?category=Pool"
+                    class="text-decoration-none text-dark filter category-link <%= activeCategory === 'Pool' ? 'active-filter' : '' %>">
+                    <i class="fa-solid fa-person-swimming"></i>
+                    <p class="mb-0">Pool</p>
+                </a>
+                <a href="/Listings?category=Beach"
+                    class="text-decoration-none text-dark filter category-link <%= activeCategory === 'Beach' ? 'active-filter' : '' %>">
+                    <i class="fa-solid fa-umbrella-beach"></i>
+                    <p class="mb-0">Beach</p>
+                </a>
+                <a href="/Listings?category=Gym"
+                    class="text-decoration-none text-dark filter category-link <%= activeCategory === 'Gym' ? 'active-filter' : '' %>">
+                    <i class="fa-solid fa-dumbbell"></i>
+                    <p class="mb-0">Gym</p>
+                </a>
+            </div>
+            <!-- 2. DROPDOWN MENU: Only visible on Mobile layouts (Screens smaller than md) -->
+            <div class="dropdown d-md-none my-2">
+                <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" id="filterDropdown"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-filter me-2"></i> Filter Categories
+                </button>
+                <ul class="dropdown-menu w-100" aria-labelledby="filterDropdown">
+                    <li><a class="dropdown-item" href="/Listings?category=Trending"><i
+                                class="fa-solid fa-fire me-2"></i> Trending</a></li>
+                    <li><a class="dropdown-item" href="/Listings?category=Mountains"><i
+                                class="fa-solid fa-mountain me-2"></i> Mountains</a></li>
+                    <li><a class="dropdown-item" href="/Listings?category=Castles"><i
+                                class="fa-brands fa-fort-awesome me-2"></i> Castles</a>
+                    </li>
+                    <li><a class="dropdown-item" href="/Listings?category=Pool"><i
+                                class="fa-solid fa-person-swimming me-2"></i> Pool</a></li>
+                    <li><a class="dropdown-item" href="/Listings?category=Beach"><i
+                                class="fa-solid fa-umbrella-beach me-2"></i> Beach</a></li>
+                    <li><a class="dropdown-item" href="/Listings?category=Gym"><i class="fa-solid fa-dumbbell me-2"></i>
+                            Gym</a></li>
+                </ul>
+            </div>
+
+            <div class="tax-toggle">
+                <div class="form-check form-switch d-flex align-items-center justify-content-between p-0 m-0">
+                    <!-- Label First -->
+                    <label class="form-check-label tax-label me-3" for="switchCheckReverse">
+                        Display total after taxes
+                    </label>
+
+                    <!-- Input Second -->
+                    <input class="form-check-input tax-switch m-0" type="checkbox" role="switch"
+                        id="switchCheckReverse">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+            <%for(let data of list){%>
+                <a href="/Listings/<%=data._id%>" class="card-link">
+                    <div class="card col listing-card">
+                        <img src="<%=data.image.url%>" class="card-img-top" alt="Listing image" style="height:20rem;">
+                        <!-- overlay for hovering -->
+                        <div class="card-img-overlay">hello</div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <b>
+                                    <%=data.title%>
+                                </b><br>
+                                &#8377;<%=data.price.toLocaleString("en-IN")%> / night
+                                    <i class="tax-info">+ 18% GST=&#8377;<%=((data.price *
+                                            0.18)+data.price).toLocaleString("en-IN")%>/night</i>
+                            </p>
+                        </div>
+                    </div>
+
+                </a>
+
+                <%}%>
+
+
+        </div>
+
+
+        <script>
+            let taxSwitch = document.getElementById("switchCheckReverse");
+            taxSwitch.addEventListener("click", () => {
+                let taxInfo = document.getElementsByClassName("tax-info");
+                for (info of taxInfo) {
+                    if (info.style.display !== "inline") {
+                        info.style.display = "inline";
+                    }
+                    else {
+                        info.style.display = "none";
+                    }
+                }
+            })
+        </script>
+
+
+    </body>

@@ -1,0 +1,88 @@
+<%- layout("layouts/boilerplate.ejs") %>
+
+    <body>
+        <div class="row justify-content-center my-4 px-2">
+            <!-- Responsive Column: Full width on mobile (col-12), centered 8-cols on medium+ screens -->
+            <div class="col-12 col-md-8 col-lg-6">
+
+                <h2 class="fw-bold mb-4 text-center text-md-start">Airbnb your home</h2>
+
+                <form method="POST" action="/Listings" novalidate class="needs-validation"
+                    enctype="multipart/form-data">
+
+                    <!-- Title -->
+                    <div class="mb-3">
+                        <label for="title" class="form-label fw-semibold">Title</label>
+                        <input name="listing[title]" id="title" type="text" class="form-control rounded-3"
+                            placeholder="Add a catchy title" required>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please enter a title.</div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label fw-semibold">Description</label>
+                        <textarea name="listing[description]" id="description" rows="4" class="form-control rounded-3"
+                            placeholder="Describe your place..." required></textarea>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please enter a short description.</div>
+                    </div>
+
+                    <!-- Image Upload -->
+                    <div class="mb-3">
+                        <label for="image" class="form-label fw-semibold">Upload Image</label>
+                        <input type="file" name="listing[image]" id="image" class="form-control rounded-3" required>
+                        <div class="invalid-feedback">Please upload a listing image.</div>
+                    </div>
+
+                    <!-- Price & Category (Side-by-side on tablet/desktop, stacked on mobile) -->
+                    <div class="row">
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="price" class="form-label fw-semibold">Price (per night)</label>
+                            <input name="listing[price]" id="price" type="number" min="0" class="form-control rounded-3"
+                                placeholder="1200" required>
+                            <div class="invalid-feedback">Please enter a valid price.</div>
+                        </div>
+
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="category" class="form-label fw-semibold">Category</label>
+                            <select name="listing[category]" id="category" class="form-select rounded-3" required>
+                                <option value="" disabled selected>Select a category</option>
+                                <option value="Trending">Trending</option>
+                                <option value="Mountains">Mountains</option>
+                                <option value="Castles">Castles</option>
+                                <option value="Pool">Pool</option>
+                                <option value="Beach">Beach</option>
+                                <option value="Gym">Gym</option>
+                            </select>
+                            <div class="invalid-feedback">Please select a category.</div>
+                        </div>
+                    </div>
+
+                    <!-- Location & Country (Side-by-side on tablet/desktop, stacked on mobile) -->
+                    <div class="row">
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="location" class="form-label fw-semibold">Location</label>
+                            <input type="text" name="listing[location]" id="location" class="form-control rounded-3"
+                                placeholder="e.g. Jaipur, Rajasthan" required>
+                            <div class="invalid-feedback">Please enter a location.</div>
+                        </div>
+
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="country" class="form-label fw-semibold">Country</label>
+                            <input type="text" name="listing[country]" id="country" class="form-control rounded-3"
+                                placeholder="e.g. India" required>
+                            <div class="invalid-feedback">Please enter a country name.</div>
+                        </div>
+                    </div>
+
+                    <!-- Responsive Add Button -->
+                    <button class="btn btn-dark w-100 w-sm-auto px-4 py-2 mt-3 rounded-3 fw-semibold add-btn">
+                        Add Listing
+                    </button>
+                </form>
+
+            </div>
+        </div>
+
+    </body>

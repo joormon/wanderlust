@@ -1,0 +1,89 @@
+
+<style>
+/* Search Container Styling */
+.search-info {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Search Input Field */
+.search-ip {
+  border-radius: 25px;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.95rem;
+  border: 1px solid #ced4da;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.search-ip:focus {
+  border-color: #fe424d;
+  box-shadow: 0 0 0 0.25rem rgba(254, 66, 77, 0.25);
+}
+
+/* Search Button */
+.search-btn {
+  background-color: #fe424d;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.search-btn:hover {
+  background-color: #e0323c;
+  color: white;
+}
+
+</style>
+
+
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+  <div class="container-fluid px-3">
+    
+    <!-- Brand Logo -->
+    <a class="navbar-brand text-danger fs-3" href="/Listings">
+      <i class="fa-brands fa-airbnb"></i>
+    </a>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible Section -->
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      
+      <!-- Left Nav Link -->
+      <div class="navbar-nav">
+        <a class="nav-link fw-semibold" href="/Listings">Explore</a>
+      </div>
+
+      <!-- Centered Search Bar -->
+      <div class="search-info my-2 my-md-0 mx-md-auto">
+        <form method="GET" action="/Listings" class="d-flex" role="search">
+          <input class="form-control me-2 search-ip" type="search" placeholder="Search destinations" aria-label="Search" name="search" />
+          <button class="btn search-btn" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
+      </div>
+
+      <!-- Right Nav Links (User Auth) -->
+      <div class="navbar-nav ms-md-auto align-items-md-center gap-2">
+        <a class="nav-link" href="/Listings/new">Airbnb your home</a>
+        <% if(!currUser) { %>
+          <a class="nav-link fw-bold" href="/signUp">Sign Up</a>
+          <a class="nav-link fw-bold" href="/login">Login</a>
+        <% } else { %>
+          <a class="nav-link text-danger fw-semibold" href="/logout">Logout</a>
+        <% } %>
+      </div>
+
+    </div>
+  </div>
+</nav>
