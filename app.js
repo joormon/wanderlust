@@ -90,7 +90,7 @@ app.use((req,res,next)=>{
 
 //Root directory
 app.get("/", (req, res) => {
-    res.send("you are in the root directory");
+    res.redirect("/Listings");
 });
 
 //Listings route
